@@ -12,7 +12,7 @@ Default port is __8081__
 
 Table definitions are already in ./app/models, 
 
-Create schema __charether__ in your local MySQL server:
+Create database __charether__ in your local MySQL server:
 
 Edit `./app/config/env.js` to change your MySQL server username & password.
 

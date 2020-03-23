@@ -11,6 +11,9 @@ module.exports = (sequelize, Sequelize) => {
         },
         start_time:{
             type:Sequelize.DATE
+        },
+        status:{
+            type:Sequelize.INTEGER
         }
     });
     return Project;

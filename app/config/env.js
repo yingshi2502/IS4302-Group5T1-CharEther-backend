@@ -1,7 +1,7 @@
 const env = {
   database: 'charether',
   username: 'root',
-  password: 'yingshi',
+  password: 'yingshi',//change to your own
   host: 'localhost',
   dialect: 'mysql',
   pool: {

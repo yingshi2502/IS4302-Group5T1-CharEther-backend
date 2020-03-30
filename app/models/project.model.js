@@ -9,9 +9,6 @@ module.exports = (sequelize, Sequelize) => {
         description: {
             type: Sequelize.STRING(2000)
         },
-        start_time:{
-            type:Sequelize.DATE
-        },
         status:{
             type:Sequelize.INTEGER
         }

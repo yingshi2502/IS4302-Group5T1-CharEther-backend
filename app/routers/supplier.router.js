@@ -9,6 +9,7 @@ router.use((req, res, next) => {
   next();
 })
 
-router.post('/create', supplierWorker.createSupplier);
+router.post('', supplierWorker.createSupplier);
+router.get('',supplierWorker.getSuppliers);
 
 module.exports = router

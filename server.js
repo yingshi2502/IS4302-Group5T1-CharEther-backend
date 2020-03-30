@@ -7,6 +7,8 @@ const db = require('./app/config/db.config.js');
 var cors = require('cors');
 var supplierRouter = require('./app/routers/supplier.router.js');
 var userRoleRouter = require('./app/routers/user_role.router.js');
+var projectRouter = require('./app/routers/project.router.js');
+var donationRouter = require('./app/routers/donation.router.js');
 
 // If your db don't have tables yet will auto-create
 db.sequelize.sync({force: false}).then(() => {
@@ -22,8 +24,10 @@ app.use(express.json());
 app.use(express.urlencoded({
   extended: true
 }));
-app.use('/api/suppliers',supplierRouter);
-app.use('/api/user_roles',userRoleRouter);
+app.use('/suppliers',supplierRouter);
+app.use('/user_roles',userRoleRouter);
+app.use('/projects',projectRouter);
+app.use('/donations',donationRouter);
 
 require('./app/routers/file.router.js')(app, router, upload);
 

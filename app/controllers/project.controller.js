@@ -1,6 +1,9 @@
 const db = require('../config/db.config.js');
 const Project = db.projects;
+const ProjectImage = db.project_images;
 let to = require('await-to-js').default;
+var stream = require('stream');
+
 
 exports.createProject = async (req, res) => {
 	const [err,resp] = await to(Project.create({
@@ -67,4 +70,30 @@ exports.terminateProject = async (req, res) => {
 	}
 	if(err)// internal server error
 		res.status(500).send(err);
+}
+
+exports.uploadImage = async (req,res) =>{
+	let projectId = req.body.id;
+	ProjectImage.create({
+		projectId: projectId,
+		caption:req.body.caption,
+		image:req.file.buffer,
+		name: req.file.originalname,
+		type: req.file.mimetype
+	}).then(() =>{
+		res.send("Image uploaded for project " + projectId);
+	})
+}
+
+exports.downloadImage = (req, res) => {//only for verifying uploading, not for retrieve image
+	ProjectImage.findById(req.params.id).then(file => {
+		var fileContents = Buffer.from(file.image, "base64");
+		var readStream = new stream.PassThrough();
+		readStream.end(fileContents);
+
+		res.set('Content-disposition', 'attachment; filename=' + file.name);
+		res.set('Content-Type', file.type);
+
+		readStream.pipe(res);
+	})
 }

@@ -28,7 +28,7 @@ app.use('/suppliers',supplierRouter);
 app.use('/user_roles',userRoleRouter);
 app.use('/projects',projectRouter);
 app.use('/donations',donationRouter);
-
+require('./app/routers/projectImage.router.js')(app, router, upload);
 require('./app/routers/file.router.js')(app, router, upload);
 
 //port: 8081

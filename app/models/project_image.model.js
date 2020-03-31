@@ -6,8 +6,14 @@ module.exports = (sequelize, Sequelize) => {
         caption: {
             type: Sequelize.STRING
         },
+        name:{
+            type:Sequelize.STRING
+        },
         image: {
             type: Sequelize.BLOB('long')
+        },
+        type:{
+            type:Sequelize.STRING
         }
     });
     return ProjectImage;

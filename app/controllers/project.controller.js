@@ -73,7 +73,8 @@ exports.terminateProject = async (req, res) => {
 }
 
 exports.uploadImage = async (req,res) =>{
-	let projectId = req.body.id;
+	let projectId = req.body.projectId;
+	// console.log(req);
 	ProjectImage.create({
 		projectId: projectId,
 		caption:req.body.caption,

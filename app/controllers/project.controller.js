@@ -26,6 +26,7 @@ exports.getProjects = async (req, res) => {
 	else
 		res.send(resp);
 }
+
 exports.getProjectById = async (req, res) => {
 	const [err,resp] = await to(Project.findAll({
 		where: {projectId : req.params.id}

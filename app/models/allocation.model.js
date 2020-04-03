@@ -3,9 +3,16 @@ module.exports = (sequelize, Sequelize) => {
         allocationId: {
             type: Sequelize.INTEGER
         },
+        fileName:{
+            type:Sequelize.STRING
+        },
+        fileType:{
+            type:Sequelize.STRING
+        },
         doc: {
             type: Sequelize.BLOB('long')
         }
+
     });
     return Allocation;
 }

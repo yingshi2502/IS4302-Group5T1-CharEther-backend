@@ -10,7 +10,8 @@ exports.createProject = async (req, res) => {
         projectId: req.body.projectId,
         title: req.body.title,
         description: req.body.description,
-        status:req.body.status
+		status:req.body.status,
+		owner:req.body.owner
     }))
 	if(err)
 		res.status(500).send(err);

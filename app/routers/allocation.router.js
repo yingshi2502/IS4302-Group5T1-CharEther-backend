@@ -9,6 +9,7 @@ router.use((req, res, next) => {
     next();
 });
 router.post('/upload', upload.single("uploadfile"), allocationWorker.createAllocation);
+router.get('/:id',allocationWorker.getAllocationById);
 router.get('/download/:id', allocationWorker.downloadAllocationDoc);
 
 module.exports = router

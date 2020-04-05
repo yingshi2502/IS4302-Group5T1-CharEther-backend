@@ -20,11 +20,39 @@ exports.createProject = async (req, res) => {
 }
 
 exports.getProjects = async (req, res) => {
-	const [err,resp] = await to(Project.findAll())
+	var [err,resp] = await to(Project.findAll({raw:true}))
 	if(err)
-		res.status(404).send(err);
+		res.status(500).send(err);
 	else
+	{
+		for( var project =0; project<resp.length;project++){
+			const id = resp[project].id;
+			var [err,file] = await to(ProjectImage.findAll({
+				where: {projectId : id},
+				raw:true
+			}))
+			if(err || file.length==0)
+			{
+				resp[project].Image = "No image found"
+				continue;
+			}
+			else
+			{
+				file = file[0]
+				const base64 = new Buffer(file.image,'binary').toString('base64');
+				const imageString = ("data:image/jpeg;base64,"+base64)
+				resp[project].Image = 
+				{
+						"caption": file.caption,
+						"name": file.name,
+						"fileType":file.type,
+						"imgSrcBase64String": imageString
+				}
+			}
+		}
 		res.send(resp);
+	}
+		
 }
 
 exports.getProjectById = async (req, res) => {

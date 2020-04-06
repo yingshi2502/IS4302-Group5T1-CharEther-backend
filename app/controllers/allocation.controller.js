@@ -10,7 +10,8 @@ exports.createAllocation = (req, res) =>{
         allocationId:allocationId,
         fileName:req.file.originalname,
         doc:req.file.buffer,
-        fileType:req.file.mimetype
+        fileType:req.file.mimetype,
+        description:req.body.description
     }).then(()=>{
         res.send("Allocation doc uploaded for transaction id "+allocationId);
     })
@@ -24,7 +25,6 @@ exports.downloadAllocationDoc = (req, res) => {//only for verifying uploading, n
 
         res.set('Content-disposition', 'attachment; filename=' + file.fileName);
         res.set('Content-Type', file.fileType);
-
         readStream.pipe(res);
     })
 }

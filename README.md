@@ -4,7 +4,7 @@ Clone repo: `git clone https://github.com/yingshi2502/is4302-server.git`
 
 Run `npm install` to install node modules
 
-Run `node server.js` at root directory to start server.
+Run `nodemon server.js` at root directory to start server.
 
 Default port is __8081__
 

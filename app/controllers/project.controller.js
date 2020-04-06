@@ -20,11 +20,39 @@ exports.createProject = async (req, res) => {
 }
 
 exports.getProjects = async (req, res) => {
-	const [err,resp] = await to(Project.findAll())
+	var [err,resp] = await to(Project.findAll({raw:true}))
 	if(err)
-		res.status(404).send(err);
+		res.status(500).send(err);
 	else
+	{
+		for( var project =0; project<resp.length;project++){
+			const id = resp[project].id;
+			var [err,file] = await to(ProjectImage.findAll({
+				where: {projectId : id},
+				raw:true
+			}))
+			if(err || file.length==0)
+			{
+				resp[project].Image = "No image found"
+				continue;
+			}
+			else
+			{
+				file = file[0]
+				const base64 = new Buffer(file.image,'binary').toString('base64');
+				const imageString = ("data:image/jpeg;base64,"+base64)
+				resp[project].Image = 
+				{
+						"caption": file.caption,
+						"name": file.name,
+						"fileType":file.type,
+						"imgSrcBase64String": imageString
+				}
+			}
+		}
 		res.send(resp);
+	}
+		
 }
 
 exports.getProjectById = async (req, res) => {
@@ -33,6 +61,16 @@ exports.getProjectById = async (req, res) => {
 	}))
 	if(resp.length==0)
 		res.status(404).send("No project has been found by this ID");
+	else
+		res.send(resp);
+}
+exports.getProjectByOwner = async (req, res) => {
+	console.log(req.params.id)
+	const [err,resp] = await to(Project.findAll({
+		where: {owner : req.params.id}
+	}))
+	if(resp.length==0)
+		res.status(404).send("No projects has been found by this owner");
 	else
 		res.send(resp);
 }
@@ -88,6 +126,30 @@ exports.uploadImage = async (req,res) =>{
 	})
 }
 
+exports.getImage = async (req, res) => {//retrieving project image
+	var [err,file] = await to(ProjectImage.findAll({
+		where: {projectId : req.params.id},
+		raw:true
+	}))
+	if(err)
+		res.status(500).send(err)
+	if(file.length==0)
+		res.status(404).send("No project Image has been found by this project ID");
+	else
+	{
+		file = file[0]
+		const base64 = new Buffer(file.image,'binary').toString('base64');
+		const imageString = ("data:image/jpeg;base64,"+base64)
+		res.send(
+			{
+				"caption": file.caption,
+				"name": file.name,
+				"fileType":file.type,
+				"imgSrcBase64String": imageString
+			}
+		)
+	}
+}
 exports.downloadImage = (req, res) => {//only for verifying uploading, not for retrieve image
 	ProjectImage.findById(req.params.id).then(file => {
 		var fileContents = Buffer.from(file.image, "base64");

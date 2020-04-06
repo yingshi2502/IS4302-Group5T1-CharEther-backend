@@ -11,6 +11,7 @@ var projectRouter = require('./app/routers/project.router.js');
 var donationRouter = require('./app/routers/donation.router.js');
 var allocationRouter = require('./app/routers/allocation.router.js');
 var projectImageRouter = require('./app/routers/projectImage.router.js');
+var mailRouter = require('./app/routers/mail.router.js')
 
 // If your db don't have tables yet will auto-create
 db.sequelize.sync({force: false}).then(() => {
@@ -32,6 +33,7 @@ app.use('/projects',projectRouter);
 app.use('/donations',donationRouter);
 app.use('/allocations', allocationRouter);
 app.use('/projectImages',projectImageRouter);
+app.use('/email',mailRouter);
 // require('./app/routers/projectImage.router.js')(app, router, upload);
 require('./app/routers/file.router.js')(app, router, upload);
 

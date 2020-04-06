@@ -1,5 +1,5 @@
 var stream = require('stream');
-
+let to = require('await-to-js').default;
 const db = require('../config/db.config.js');
 const Allocation = db.allocations;
 
@@ -17,6 +17,30 @@ exports.createAllocation = (req, res) =>{
     })
 }
 
+exports.getAllocationById = async (req, res) => {//retrieving allocation document
+	var [err,file] = await to(Allocation.findAll({
+		where: {allocationId : req.params.id},
+		raw:true
+	}))
+	if(err)
+		res.status(500).send(err)
+	if(file.length==0)
+		res.status(404).send("No Allocation has been found by this ID");
+	else
+	{
+        file = file[0]
+        console.log(file)
+		const base64 = new Buffer(file.doc,'binary').toString('base64');
+		const imageString = ("data:image/jpeg;base64,"+base64)
+		res.send(
+			{
+				"name": file.fileName,
+				"fileType":file.fileType,
+				"imgSrcBase64String": imageString
+			}
+		)
+	}
+}
 exports.downloadAllocationDoc = (req, res) => {//only for verifying uploading, not for retrieve doc
     Allocation.findById(req.params.id).then(file => {
         var fileContents = Buffer.from(file.doc, "base64");

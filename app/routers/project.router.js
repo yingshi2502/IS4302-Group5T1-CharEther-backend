@@ -12,6 +12,7 @@ router.use((req, res, next) => {
 router.post('', projectWorker.createProject);
 router.get('',projectWorker.getProjects);
 router.get('/:id',projectWorker.getProjectById);
+router.get('/owner/:id',projectWorker.getProjectByOwner);
 router.put('/:id',projectWorker.updateProject);
 router.put('/terminate/:id',projectWorker.terminateProject);
 module.exports = router

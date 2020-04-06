@@ -10,7 +10,10 @@ router.use((req, res, next) => {
 });
 
 router.post('/upload', upload.single("uploadfile"), projectWorker.uploadImage);
+
+router.get('/download/:id', projectWorker.downloadImage);//only for verification of uploading
+
 router.get('/project/:id', projectWorker.getImage);
-router.get('/download/:id', projectWorker.downloadImage);
+
 
 module.exports = router;

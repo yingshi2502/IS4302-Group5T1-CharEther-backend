@@ -11,6 +11,9 @@ module.exports = (sequelize, Sequelize) => {
         },
         doc: {
             type: Sequelize.BLOB('long')
+        },
+        description:{
+            type:Sequelize.STRING
         }
 
     });

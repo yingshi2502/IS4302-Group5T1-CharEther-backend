@@ -41,8 +41,14 @@ exports.getAllocationById = async (req, res) => {//retrieving allocation documen
 		)
 	}
 }
-exports.downloadAllocationDoc = (req, res) => {//only for verifying uploading, not for retrieve doc
-    Allocation.findById(req.params.id).then(file => {
+
+exports.downloadAllocationDoc = async (req, res) => {
+    Allocation.findAll({ where: { allocationId: req.params.id } }).then(files => {
+        if (files.length==0)
+            res.status(404).send("No Allocation has been found by this ID");
+
+        let file = files[0];
+
         var fileContents = Buffer.from(file.doc, "base64");
         var readStream = new stream.PassThrough();
         readStream.end(fileContents);
@@ -52,4 +58,17 @@ exports.downloadAllocationDoc = (req, res) => {//only for verifying uploading, n
         readStream.pipe(res);
     })
 }
+
+
+// exports.downloadAllocationDocByDBId = (req, res) => {//only for verifying uploading, not for retrieve doc
+//     Allocation.findById(req.params.id).then(file => {
+//         var fileContents = Buffer.from(file.doc, "base64");
+//         var readStream = new stream.PassThrough();
+//         readStream.end(fileContents);
+
+//         res.set('Content-disposition', 'attachment; filename=' + file.fileName);
+//         res.set('Content-Type', file.fileType);
+//         readStream.pipe(res);
+//     })
+// }
 

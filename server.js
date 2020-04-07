@@ -14,7 +14,7 @@ var projectImageRouter = require('./app/routers/projectImage.router.js');
 var mailRouter = require('./app/routers/mail.router.js')
 
 // If your db don't have tables yet will auto-create
-db.sequelize.sync({force: false}).then(() => {
+db.sequelize.sync({force: true}).then(() => {
   console.log('Sync if db not created yet');
 }); 
 app.use(cors());

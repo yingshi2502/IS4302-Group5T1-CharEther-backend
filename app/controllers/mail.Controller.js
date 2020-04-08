@@ -33,16 +33,14 @@ exports.donationOutcome =  (req,res) => {
   }
 
   var emailContent = 
-  "This is regarding donation Id \""+ req.body.donationId+"\""+
-  ", of amount \""+ req.body.donationAmount +"\""+
-  ", for the charity project \""+req.body.project+"\". \n \n";
+  "This is regarding the donation Id \""+ req.body.donationId+"\". <br />";
 
   if(req.body.accepted)
     emailContent = emailContent + 
     "We are happy to inform you that your donation has been accepted by us. Thank you for your support and kindness."
   else
     emailContent = emailContent + 
-    "We are sad to inform you that your donation has been rejected by us for the following reason.\nReason: " +req.body.reason;
+    "We are sad to inform you that your donation has been rejected by us for the following reason. <br /> Reason: " +req.body.reason;
   console.log(emailContent)
   sendMail(req.body.recipientEmail, "Donation acceptance results",  emailContent);
   res.status(200).send("Email successfully sent to donor "+req.body.recipientEmail);

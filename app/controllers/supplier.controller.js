@@ -6,7 +6,8 @@ exports.createSupplier = async (req, res) => {
 	const [err,resp] = await to(Supplier.create({
 		supplierId: req.body.supplierId,
 		name: req.body.name,
-		description: req.body.description
+		description: req.body.description,
+		address: req.body.address
 	}))
 	if(err)
 		res.status(500).send(err);

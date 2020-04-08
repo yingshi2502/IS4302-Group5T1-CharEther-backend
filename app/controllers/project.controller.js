@@ -26,7 +26,7 @@ exports.getProjects = async (req, res) => {
 	else
 	{
 		for( var project =0; project<resp.length;project++){
-			const id = resp[project].id;
+			const id = resp[project].projectId;
 			var [err,file] = await to(ProjectImage.findAll({
 				where: {projectId : id},
 				raw:true

@@ -18,9 +18,13 @@ __2. Create database__
   
 __3. Refresh previlleges__
 One very important thing to here is to type the following,
-`ALTER USER '<username>'@'localhost' IDENTIFIED WITH mysql_native_password BY '<password>'`, with your own username and password
+
+`ALTER USER '<username>'@'localhost' IDENTIFIED WITH mysql_native_password BY '<password>'`
+
+, with your own username and password
 
 Then run this query to refresh privileges:
+
 `flush privileges`
 
 what happened above is we set a specific authentication protocol for the mysql
@@ -35,18 +39,18 @@ From here onwards, you should be able to connect to the DB via express JS and cr
 
 ## Running the backend server
 
-Clone the following git repository in your local machine :
+Clone the following git repository in your local machine:
+
 `git clone https://github.com/yingshi2502/IS4302-Group5T1-CharEther-backend.git`
 
-
-In the directory, run `npm install` to install node modules.
+In the directory, run  `npm install` to install node modules.
 
 
 To connect this server to the SQL “charether” DB you just created in the previous steps, you need to edit `./app/config/env.js` file to change it to your MySQL server username & password which you had set during installation.
-![ENVJS](/envJs.png)
+![ENVJS](/evnJs.png)
 
 
-Run `nodemon server.js` at root directory to start server. Default port is 8081. If you have followed all the steps till here correctly you should see the following line in the command line:
+Run  `nodemon server.js` at root directory to start server. Default port is 8081. If you have followed all the steps till here correctly you should see the following line in the command line:
 ![StartUpPrintout](/StartUpPrintOut.png)
 
 The backend server is now running and you can use the frontend to query and work with it.
